@@ -15,7 +15,7 @@ jobs:
           scheme: semver
           increment: patch
       - run: ls
-      - run: docker build -t getting-started .
+      - run: docker build -t ${{ vars.DOCKERHUB_USERNAME }}/getting-started:${{ steps.version.outputs.version }} .
       - run: docker images
       - run: docker login
       -
@@ -24,8 +24,7 @@ jobs:
         with:
           username: ${{ vars.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - run: docker tag getting-started ${{ vars.DOCKERHUB_USERNAME }}/getting-started:${{ steps.version.outputs.version }}
-      - run: docker push ${{ vars.DOCKERHUB_USERNAME }}/getting-started
+      - run: docker push ${{ vars.DOCKERHUB_USERNAME }}/getting-started:${{ steps.version.outputs.version }}
 
 
 # checkout
